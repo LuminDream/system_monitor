@@ -1,0 +1,88 @@
+/* 系统状态监控 - 样式表
+ *
+ * 关键：
+ *   - 压掉 Cinnamon 默认 applet-box 的左右 padding，并去掉 applet 自身左右内边距，
+ *     让整块紧贴相邻 applet（不再松松散散）；
+ *   - 字体族/字重一律不写死：继承 #panel → 系统字体
+ *     （gsettings org.cinnamon.desktop.interface font-name，当前 "Ubuntu 12"；
+ *      #panel 为 normal 字重），与右侧时钟保持一致，日后改系统字体会自动同步；
+ *   - label 用定宽 min-width，数值变化时整块宽度恒定，不挤到相邻 applet；
+ *   - 颜色刻意不写死，继承面板主题色 → 明亮/暗夜模式都自动正确；
+ *   - 字号由 applet.js 里 _relayout() 内联写入（跟随面板高度动态计算），此处只留最小值兜底。
+ */
+
+.sysmon2x2-applet {
+    padding: 0;
+    spacing: 0;
+}
+
+.sysmon-root {
+    spacing: 0;
+    padding: 0;
+}
+
+.sysmon-col {
+    spacing: 0;
+    padding: 0;
+}
+
+.sysmon-cell {
+    spacing: 2px;          /* 图标 ↔ 数值 */
+    padding: 0 1px;
+}
+
+.sysmon-icon {
+    /* icon-size 由 _relayout() 内联写入，随面板高度缩放 */
+}
+
+/* 数值加粗；不指定字体族，继承面板主题字体。 */
+.sysmon-label {
+    font-weight: bold;
+}
+
+/* 定宽 min-width 按"最宽数值 + 加粗"留量：既避免数字跳动时整块宽度抖动，又不留多余空隙。
+   speed 覆盖 "999K/s"（6 字符）
+   mem   覆盖 "100%" （4 字符）
+   cpu   覆盖 "9.9G" （4 字符） */
+.sysmon-speed { min-width: 43px; }
+.sysmon-mem   { min-width: 34px; }
+.sysmon-cpu   { min-width: 31px; }
+
+/* 面板按钮默认的 padding 这里兜底压掉 */
+.panel-bottom .sysmon2x2-applet,
+.panel-top .sysmon2x2-applet {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* ============================ 悬停浮动详情卡 ============================
+   深色半透明圆角卡片，浮在面板上方；字体同样继承系统字体（不写死字族）。 */
+.sysmon-pop {
+    background-color: rgba(24, 26, 30, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 10px 14px;
+    spacing: 7px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+}
+
+.sysmon-pop-row {
+    spacing: 9px;
+}
+
+.sysmon-pop-icon {
+    icon-size: 15px;
+    color: #8fc1f2;          /* 点缀蓝，与深色卡对比清晰 */
+}
+
+.sysmon-pop-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.62);
+    min-width: 36px;         /* 名称列定宽 → 数值列左缘对齐 */
+}
+
+.sysmon-pop-val {
+    font-size: 13px;
+    color: #eef2f6;
+}

@@ -1,0 +1,10 @@
+{
+    "uuid": "sysmon2x2@local",
+    "name": "系统状态监控",
+    "description": "Cinnamon 面板 2×2 系统监控：上传/下载速率、内存占用、CPU 频率。数值定宽不抖动，排版随面板高度自适应。",
+    "version": "1.0.0",
+    "max-instances": -1,
+    "hide-configuration": true,
+    "author": "sysmon2x2",
+    "last-edited": 1760000000
+}
